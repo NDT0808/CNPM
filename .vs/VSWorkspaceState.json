@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\foodfast-frontend",
+    "\\foodfast-frontend\\src",
+    "\\foodfast-frontend\\src\\pages",
+    "\\order-service",
+    "\\order-service\\src",
+    "\\order-service\\src\\controllers",
+    "\\order-service\\src\\middleware",
+    "\\order-service\\src\\models",
+    "\\order-service\\src\\routes",
+    "\\user-service"
+  ],
+  "SelectedNode": "\\order-service\\src\\controllers\\orderController.js",
+  "PreviewInSolutionExplorer": false
+}
