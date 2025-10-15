@@ -148,11 +148,13 @@ graph TD
 - Git
 
 ### Các bước cài đặt
+
 1.  **Clone repository:**
     ```bash
-    git clone [https://github.com/your-username/foodfast-delivery.git](https://github.com/your-username/foodfast-delivery.git)
-    cd foodfast-delivery
+    git clone [https://github.com/PhucHungNhanba/CNPM_SGU.git](https://github.com/PhucHungNhanba/CNPM_SGU.git)
+    cd CNPM_SGU
     ```
+
 2.  **Cấu hình biến môi trường:**
     Trong thư mục của mỗi microservice, sao chép file `application.yml.example` thành `application.yml` và điền các thông tin cần thiết.
 
