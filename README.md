@@ -29,29 +29,25 @@
 ```mermaid
 graph TD
     subgraph Frontend
-        A[📱 Client <br> React.js / React Native]
+        A["📱 Client <br> React.js / React Native"]
     end
 
     subgraph Backend Infrastructure
-        B(API Gateway)
-        F[Message Broker <br> (Kafka)]
-        G[🔔 Notification Service]
+        B("API Gateway")
+        F["Message Broker <br> (Kafka)"]
+        G["🔔 Notification Service"]
     end
 
     subgraph Core Microservices
-        C[👤 User Service]
-        D[🛍️ Product Service]
-        E[🛒 Order Service]
-        H[💳 Payment Service]
-        I[🚚 Delivery Service]
+        C["👤 User Service"]
+        D["🛍️ Product Service"]
+        E["🛒 Order Service"]
+        H["💳 Payment Service"]
+        I["🚚 Delivery Service"]
     end
 
     A -- REST API --> B
-    B --> C
-    B --> D
-    B --> E
-    B --> H
-    B --> I
+    B --> C & D & E & H & I
 
     E -- Publishes Event --> F
     H -- Publishes Event --> F
