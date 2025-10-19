@@ -1,5 +1,4 @@
-﻿// src/pages/ShippingPage.jsx
-import React, { useState, useContext } from 'react';
+﻿import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
@@ -10,39 +9,62 @@ const ShippingPage = () => {
     const [city, setCity] = useState('');
     const [error, setError] = useState(null);
 
-    const { userInfo } = useContext(AuthContext);
+    const { userInfo } = useContext(AuthContext); // Lấy userInfo chứa token
     const { cartItems, clearCart } = useContext(CartContext);
     const navigate = useNavigate();
 
     const placeOrderHandler = async (e) => {
         e.preventDefault();
         setError(null);
+
+        // Kiểm tra xem userInfo có tồn tại không
+        if (!userInfo || !userInfo.token) {
+            setError('Bạn cần đăng nhập để đặt hàng.');
+            return;
+        }
+
         try {
             const orderData = {
-                userId: userInfo._id,
+                userId: userInfo._id, // Lấy ID từ người dùng đã đăng nhập
                 orderItems: cartItems.map(item => ({
                     productId: item._id,
-                    name: item.name,
+                    // name: item.name, // Backend tự lấy tên từ productId
                     quantity: item.quantity,
-                    price: item.price,
+                    // price: item.price, // Backend tự lấy giá từ productId
                 })),
-                shippingAddress: { address, city },
+                shippingAddress: {
+                    address,
+                    city,
+                },
             };
 
+            // --- PHẦN QUAN TRỌNG: Thêm config với token ---
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`, // Gửi token đi
+                },
+            };
+
+            // Gửi request POST kèm theo config
             const { data: createdOrder } = await axios.post(
-                'http://localhost:3000/api/orders',
-                orderData
+                'http://localhost:3000/api/orders', // Gọi qua API Gateway
+                orderData,
+                config // <-- Thêm config vào đây
             );
+            // --- KẾT THÚC PHẦN QUAN TRỌNG ---
 
             alert('Đặt hàng thành công!');
-            clearCart();
-            navigate(`/order/${createdOrder._id}`);;
+            clearCart(); // Xóa giỏ hàng
+            navigate(`/order/${createdOrder._id}`); // Chuyển đến trang chi tiết đơn hàng
 
         } catch (err) {
             setError(err.response?.data?.message || 'Có lỗi xảy ra khi đặt hàng.');
+            console.error("Place order error:", err); // Log lỗi chi tiết
         }
     };
 
+    // ... phần JSX của form giữ nguyên ...
     return (
         <div className="flex items-center justify-center min-h-[80vh] bg-gray-50">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">

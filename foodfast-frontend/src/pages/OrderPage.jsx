@@ -29,10 +29,15 @@ const OrderPage = () => {
 
     const paymentHandler = async () => {
         try {
-            // Gọi đến Payment Service "giả lập"
+            // Call Payment Service
             await axios.post('http://localhost:3000/api/payments', { orderId });
             alert('Thanh toán thành công!');
-            navigate('/myorders');
+
+            // Change this line:
+            // navigate('/myorders'); 
+
+            // To this:
+            navigate(`/track/${orderId}`); // Navigate to the tracking page for this specific order
         } catch (error) {
             alert('Thanh toán thất bại.');
         }

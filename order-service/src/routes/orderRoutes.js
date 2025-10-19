@@ -3,7 +3,8 @@ import {
     createOrder,
     getMyOrders,
     updateOrderToPaid,
-    getOrderById
+    getOrderById,
+    updateOrderStatus // <-- Make sure this is imported
 } from '../controllers/orderController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -15,10 +16,13 @@ router.route('/').post(protect, createOrder);
 // Route để lấy tất cả đơn hàng của một user
 router.route('/myorders/:userId').get(protect, getMyOrders);
 
-// Route để lấy một đơn hàng cụ thể theo ID <-- DÒNG QUAN TRỌNG
+// Route để lấy một đơn hàng cụ thể theo ID
 router.route('/:id').get(protect, getOrderById);
 
-// Route để cập nhật trạng thái thanh toán
-router.route('/:id/pay').put(updateOrderToPaid); // Middleware `protect` có thể thêm ở đây nếu cần
+// Route để cập nhật trạng thái thanh toán (gọi từ Payment Service)
+router.route('/:id/pay').put(updateOrderToPaid);
+
+// Route để cập nhật trạng thái giao hàng (gọi từ Delivery Service)
+router.route('/:id/status').put(updateOrderStatus);
 
 export default router;

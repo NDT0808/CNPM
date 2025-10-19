@@ -1,4 +1,6 @@
-﻿import Order from '../models/orderModel.js';
+﻿// order-service/src/controllers/orderController.js
+
+import Order from '../models/orderModel.js';
 import axios from 'axios';
 
 // @desc    Tạo đơn hàng mới
@@ -56,18 +58,24 @@ export const getMyOrders = async (req, res) => {
     }
 };
 
-// @desc    Cập nhật trạng thái đơn hàng thành đã thanh toán
+// @desc    Cập nhật trạng thái đơn hàng thành đã thanh toán (gọi từ Payment Service)
 // @route   PUT /:id/pay
 export const updateOrderToPaid = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
-
         if (order) {
             order.isPaid = true;
             order.paidAt = Date.now();
             order.status = 'Processing';
-
             const updatedOrder = await order.save();
+
+            // Gọi Delivery Service để bắt đầu giao hàng
+            try {
+                await axios.post('http://localhost:3004/start-delivery', { orderId: req.params.id });
+            } catch (err) {
+                console.error("Không thể gọi Delivery Service:", err.message);
+            }
+
             res.json(updatedOrder);
         } else {
             res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
@@ -84,6 +92,31 @@ export const getOrderById = async (req, res) => {
         const order = await Order.findById(req.params.id);
         if (order) {
             res.json(order);
+        } else {
+            res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi server' });
+    }
+};
+
+// @desc    Cập nhật trạng thái giao hàng (gọi từ Delivery Service)
+// @route   PUT /:id/status
+export const updateOrderStatus = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            order.status = req.body.status || order.status;
+            const updatedOrder = await order.save();
+
+            // Gửi thông báo đến client (nếu có)
+            if (req.io) {
+                req.io.to(req.params.id).emit('status_update', {
+                    status: updatedOrder.status
+                });
+            }
+
+            res.json(updatedOrder);
         } else {
             res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
         }

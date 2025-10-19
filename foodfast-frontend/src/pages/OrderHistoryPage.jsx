@@ -1,5 +1,4 @@
-﻿// src/pages/OrderHistoryPage.jsx
-import React, { useState, useEffect, useContext } from 'react';
+﻿import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -8,24 +7,47 @@ const OrderHistoryPage = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { userInfo } = useContext(AuthContext);
+    const { userInfo } = useContext(AuthContext); // Get userInfo which contains the token
 
     useEffect(() => {
         const fetchOrders = async () => {
-            if (!userInfo) { setLoading(false); return; }
+            // Make sure userInfo exists before trying to fetch
+            if (!userInfo || !userInfo.token) {
+                setError('Bạn cần đăng nhập để xem lịch sử.');
+                setLoading(false);
+                return;
+            }
             try {
+                setLoading(true);
+                // --- THIS IS THE IMPORTANT PART ---
+                // Create the config object with the Authorization header
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${userInfo.token}`, // Add the token here
+                    },
+                };
+
+                // Pass the config object as the second argument to axios.get
                 const { data } = await axios.get(
-                    `http://localhost:3000/api/orders/myorders/${userInfo._id}`
+                    `http://localhost:3000/api/orders/myorders/${userInfo._id}`,
+                    config // <-- Pass config here
                 );
+                // --- END OF IMPORTANT PART ---
+
                 setOrders(data);
             } catch (err) {
-                setError('Không thể tải lịch sử đơn hàng.');
+                setError('Không thể tải lịch sử đơn hàng. Vui lòng thử đăng nhập lại.');
+                console.error("Fetch orders error:", err); // Log the error for more details
             } finally {
                 setLoading(false);
             }
         };
+
         fetchOrders();
-    }, [userInfo]);
+    }, [userInfo]); // Re-run if userInfo changes
+
+    // ... rest of the component (loading, error, table rendering) ...
+    // (The JSX part for displaying the table remains the same)
 
     if (loading) return <p className="text-center mt-8">Đang tải lịch sử đơn hàng...</p>;
     if (error) return <p className="text-center mt-8 text-red-500">{error}</p>;
