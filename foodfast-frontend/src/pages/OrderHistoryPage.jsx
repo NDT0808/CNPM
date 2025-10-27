@@ -1,17 +1,16 @@
 ﻿import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Make sure Link is imported
 
 const OrderHistoryPage = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { userInfo } = useContext(AuthContext); // Get userInfo which contains the token
+    const { userInfo } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchOrders = async () => {
-            // Make sure userInfo exists before trying to fetch
             if (!userInfo || !userInfo.token) {
                 setError('Bạn cần đăng nhập để xem lịch sử.');
                 setLoading(false);
@@ -19,35 +18,17 @@ const OrderHistoryPage = () => {
             }
             try {
                 setLoading(true);
-                // --- THIS IS THE IMPORTANT PART ---
-                // Create the config object with the Authorization header
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${userInfo.token}`, // Add the token here
-                    },
-                };
-
-                // Pass the config object as the second argument to axios.get
-                const { data } = await axios.get(
-                    `http://localhost:3000/api/orders/myorders/${userInfo._id}`,
-                    config // <-- Pass config here
-                );
-                // --- END OF IMPORTANT PART ---
-
+                const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
+                const { data } = await axios.get(`http://localhost:3000/api/orders/myorders/${userInfo._id}`, config);
                 setOrders(data);
             } catch (err) {
-                setError('Không thể tải lịch sử đơn hàng. Vui lòng thử đăng nhập lại.');
-                console.error("Fetch orders error:", err); // Log the error for more details
+                setError('Không thể tải lịch sử đơn hàng.');
             } finally {
                 setLoading(false);
             }
         };
-
         fetchOrders();
-    }, [userInfo]); // Re-run if userInfo changes
-
-    // ... rest of the component (loading, error, table rendering) ...
-    // (The JSX part for displaying the table remains the same)
+    }, [userInfo]);
 
     if (loading) return <p className="text-center mt-8">Đang tải lịch sử đơn hàng...</p>;
     if (error) return <p className="text-center mt-8 text-red-500">{error}</p>;
@@ -72,6 +53,10 @@ const OrderHistoryPage = () => {
                                 <th scope="col" className="px-6 py-3">TỔNG TIỀN</th>
                                 <th scope="col" className="px-6 py-3">TRẠNG THÁI</th>
                                 <th scope="col" className="px-6 py-3">ĐÃ THANH TOÁN</th>
+                                {/* Add new header for details */}
+                                <th scope="col" className="px-6 py-3">
+                                    <span className="sr-only">Chi tiết</span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,6 +69,15 @@ const OrderHistoryPage = () => {
                                     <td className="px-6 py-4">{order.totalPrice.toLocaleString('vi-VN')} VNĐ</td>
                                     <td className="px-6 py-4">{order.status}</td>
                                     <td className="px-6 py-4">{order.isPaid ? 'Rồi' : 'Chưa'}</td>
+                                    {/* Add new cell with Link */}
+                                    <td className="px-6 py-4 text-right">
+                                        <Link
+                                            to={`/order/${order._id}`}
+                                            className="font-medium text-indigo-600 hover:text-indigo-800 hover:underline"
+                                        >
+                                            Chi tiết
+                                        </Link>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

@@ -124,3 +124,14 @@ export const updateOrderStatus = async (req, res) => {
         res.status(500).json({ message: 'Lỗi server' });
     }
 };
+
+// @desc    Get all orders (Admin only)
+// @route   GET /all
+export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({}); // Find all orders
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi server khi lấy tất cả đơn hàng' });
+    }
+};

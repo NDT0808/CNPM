@@ -3,13 +3,10 @@
     "",
     "\\foodfast-frontend",
     "\\foodfast-frontend\\src",
+    "\\foodfast-frontend\\src\\components",
     "\\foodfast-frontend\\src\\pages",
-    "\\order-service\\src\\routes",
-    "\\payment-service\\controllers",
-    "\\payment-service\\routes",
-    "\\user-service\\src",
-    "\\user-service\\src\\routes"
+    "\\foodfast-frontend\\src\\pages\\admin"
   ],
-  "SelectedNode": "\\foodfast-frontend\\src\\pages\\OrderTrackingPage.jsx",
+  "SelectedNode": "\\foodfast-frontend\\src\\pages\\admin\\OrderListAdminPage.jsx",
   "PreviewInSolutionExplorer": false
 }
