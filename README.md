@@ -215,8 +215,3 @@ Hệ thống xử lý các nghiệp vụ phức tạp bằng cơ chế sự ki�
     ```
 
 -----
-
-Made with ❤️ and 🍚 by **FoodFast Team**
-
-```
-```
