@@ -5,29 +5,29 @@
 [![Kubernetes](https://img.shields.io/badge/Deployment-Kubernetes-326ce5)](https://kubernetes.io/)
 [![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot-green)](https://spring.io/projects/spring-boot)
 
-[cite_start]Hệ thống backend cho ứng dụng giao đồ ăn **"FoodFast Delivery"** (tiền thân là DRONE - FAST FOOD DELIVERY [cite: 3]), chuyên phục vụ các món ăn đặc trưng Việt Nam (Cơm Tấm, Phở, Bún chả...).
+Hệ thống backend cho ứng dụng giao đồ ăn **"FoodFast Delivery"** (tiền thân là DRONE - FAST FOOD DELIVERY), chuyên phục vụ các món ăn đặc trưng Việt Nam (Cơm Tấm, Phở, Bún chả...).
 
-[cite_start]Dự án được xây dựng theo kiến trúc **Microservices hướng sự kiện (Event-Driven)**[cite: 32], ứng dụng công nghệ Drone để giao hàng. [cite_start]Mục tiêu là giải quyết các vấn đề về trải nghiệm người dùng không đồng nhất [cite: 5][cite_start], quy trình đặt hàng phức tạp [cite: 7] [cite_start]và thiếu công cụ theo dõi đơn hàng minh bạch trong các hệ thống hiện tại[cite: 6].
+Dự án được xây dựng theo kiến trúc **Microservices hướng sự kiện (Event-Driven)**, ứng dụng công nghệ Drone để giao hàng. Mục tiêu là giải quyết các vấn đề về trải nghiệm người dùng không đồng nhất, quy trình đặt hàng phức tạp và thiếu công cụ theo dõi đơn hàng minh bạch trong các hệ thống hiện tại.
 
 ---
 
 ## 🎯 Mục tiêu dự án (Project Goals)
 
-* [cite_start]✅ **Trải nghiệm nhất quán:** Cung cấp trải nghiệm đặt hàng nhanh chóng, tiện lợi và đồng bộ trên cả nền tảng Web (React.js) và Mobile (React Native)[cite: 22].
-* [cite_start]✅ **Hệ thống tích hợp:** Tích hợp liền mạch các chức năng từ duyệt menu, giỏ hàng, thanh toán (VNPay) đến theo dõi đơn hàng trong một hệ thống duy nhất[cite: 23].
-* [cite_start]✅ **Khả năng mở rộng:** Xây dựng hệ thống linh hoạt, dễ dàng mở rộng để tích hợp thêm các đối tác nhà hàng và dịch vụ vận chuyển mới[cite: 24].
-* [cite_start]✅ **Độ ổn định và Giám sát:** Đảm bảo hệ thống hoạt động ổn định, có khả năng phục hồi cao và được giám sát theo thời gian thực[cite: 25].
+* ✅ **Trải nghiệm nhất quán:** Cung cấp trải nghiệm đặt hàng nhanh chóng, tiện lợi và đồng bộ trên cả nền tảng Web (React.js) và Mobile (React Native).
+* ✅ **Hệ thống tích hợp:** Tích hợp liền mạch các chức năng từ duyệt menu, giỏ hàng, thanh toán (VNPay) đến theo dõi đơn hàng trong một hệ thống duy nhất.
+* ✅ **Khả năng mở rộng:** Xây dựng hệ thống linh hoạt, dễ dàng mở rộng để tích hợp thêm các đối tác nhà hàng và dịch vụ vận chuyển mới.
+* ✅ **Độ ổn định và Giám sát:** Đảm bảo hệ thống hoạt động ổn định, có khả năng phục hồi cao và được giám sát theo thời gian thực.
 
 ---
 
 ## 🏗️ Kiến trúc hệ thống (System Architecture)
 
-[cite_start]Hệ thống được thiết kế theo kiến trúc **Microservices hướng sự kiện** [cite: 32][cite_start], sử dụng **Message Broker (Kafka)** để giao tiếp bất đồng bộ giữa các dịch vụ[cite: 34].
+Hệ thống được thiết kế theo kiến trúc **Microservices hướng sự kiện**, sử dụng **Message Broker (Kafka)** để giao tiếp bất đồng bộ giữa các dịch vụ.
 
-* [cite_start]**Client (Web/Mobile):** Giao diện người dùng được xây dựng bằng React.js và React Native[cite: 10, 41].
-* [cite_start]**API Gateway:** Là điểm vào duy nhất cho tất cả các yêu cầu từ Client, điều hướng đến các microservice phù hợp[cite: 34].
-* [cite_start]**Core Microservices:** Gồm 5 dịch vụ chính (User, Product, Order, Payment, Delivery), mỗi dịch vụ có logic nghiệp vụ và cơ sở dữ liệu riêng[cite: 11, 46].
-* [cite_start]**Messaging & Real-time:** Kafka xử lý các sự kiện[cite: 192, 254]. [cite_start]**Notification Service** lắng nghe các sự kiện này để gửi thông báo real-time tới người dùng qua WebSocket/SignalR[cite: 199, 257].
+* **Client (Web/Mobile):** Giao diện người dùng được xây dựng bằng React.js và React Native.
+* **API Gateway:** Là điểm vào duy nhất cho tất cả các yêu cầu từ Client, điều hướng đến các microservice phù hợp.
+* **Core Microservices:** Gồm 5 dịch vụ chính (User, Product, Order, Payment, Delivery), mỗi dịch vụ có logic nghiệp vụ và cơ sở dữ liệu riêng.
+* **Messaging & Real-time:** Kafka xử lý các sự kiện. **Notification Service** lắng nghe các sự kiện này để gửi thông báo real-time tới người dùng qua WebSocket/SignalR.
 
 ```mermaid
 graph TD
@@ -59,7 +59,7 @@ graph TD
     F -- "Consume Event" --> E
     F -- "Consume Event" --> I
     F -- "Consume Event" --> G
-    F -- "Consume Event" --> D %% Dành cho Rollback
+    F -- "Consume Event" --> D
 
     G -- WebSocket/SignalR --> A
 ````
@@ -217,6 +217,3 @@ Hệ thống xử lý các nghiệp vụ phức tạp bằng cơ chế sự ki�
 -----
 
 Made with ❤️ and 🍚 by **FoodFast Team**
-
-```
-```
