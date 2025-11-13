@@ -4,7 +4,7 @@
 [![Build Status](https://img.shields.io/badge/Build-Passing-success)](https://github.com/PhucHungNhanba/CNPM_SGU.git)
 [![Kubernetes](https://img.shields.io/badge/Deployment-Kubernetes-326ce5)](https://kubernetes.io/)
 [![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot-green)](https://spring.io/projects/spring-boot)
-
+ 
 Hệ thống backend cho ứng dụng giao đồ ăn **"FoodFast Delivery"** (tiền thân là DRONE - FAST FOOD DELIVERY), chuyên phục vụ các món ăn đặc trưng Việt Nam (Cơm Tấm, Phở, Bún chả...).
 
 Dự án được xây dựng theo kiến trúc **Microservices hướng sự kiện (Event-Driven)**, ứng dụng công nghệ Drone để giao hàng. Mục tiêu là giải quyết các vấn đề về trải nghiệm người dùng không đồng nhất, quy trình đặt hàng phức tạp và thiếu công cụ theo dõi đơn hàng minh bạch trong các hệ thống hiện tại.
