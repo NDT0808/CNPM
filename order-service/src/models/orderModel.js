@@ -1,40 +1,66 @@
-﻿// order-service/src/models/orderModel.js
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
 
-const orderSchema = new mongoose.Schema(
+const orderSchema = mongoose.Schema(
     {
-        userId: { type: String, required: true },
+        // --- SỬA LẠI CHO GIỐNG ẢNH ---
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User' // Đổi tên field từ 'user' -> 'userId'
+        },
+        branchId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true, // Vẫn giữ để hỗ trợ tính năng đa chi nhánh
+        },
         orderItems: [
             {
-                productId: { type: String, required: true },
                 name: { type: String, required: true },
-                quantity: { type: Number, required: true },
+                qty: { type: Number, required: true },
+                image: { type: String, required: true },
                 price: { type: Number, required: true },
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: true,
+                    ref: 'Product',
+                },
+                // Lưu option nếu có
+                selectedOptions: [
+                    { name: String, price: Number }
+                ],
+                note: String
             },
         ],
         shippingAddress: {
             address: { type: String, required: true },
             city: { type: String, required: true },
+            phone: { type: String }, // Thêm sđt
+            // Các trường này backend yêu cầu nhưng frontend có thể tự map
+            postalCode: { type: String, default: '70000' },
+            country: { type: String, default: 'Vietnam' },
         },
-        totalPrice: {
-            type: Number,
-            required: true,
-            default: 0.0,
-        },
-        status: {
+        paymentMethod: {
             type: String,
             required: true,
-            enum: ['Pending', 'Processing', 'Delivered', 'Cancelled'],
-            default: 'Pending',
+            default: 'PAID'
         },
-        isPaid: {
-            type: Boolean,
-            required: true,
-            default: false,
+        paymentResult: {
+            id: { type: String },
+            status: { type: String },
+            update_time: { type: String },
+            email_address: { type: String },
         },
-        paidAt: {
-            type: Date,
-        },
+        itemsPrice: { type: Number, default: 0.0 },
+        taxPrice: { type: Number, default: 0.0 },
+        shippingPrice: { type: Number, default: 0.0 },
+        totalPrice: { type: Number, required: true, default: 0.0 },
+        isPaid: { type: Boolean, required: true, default: false },
+        paidAt: { type: Date },
+        isDelivered: { type: Boolean, required: true, default: false },
+        deliveredAt: { type: Date },
+        status: { type: String, default: 'Pending' },
+
+        // --- GIỐNG ẢNH ---
+        droneId: { type: String, default: null }
     },
     {
         timestamps: true,
@@ -42,4 +68,5 @@ const orderSchema = new mongoose.Schema(
 );
 
 const Order = mongoose.model('Order', orderSchema);
+
 export default Order;
