@@ -7,13 +7,21 @@ dotenv.config();
 
 const app = express();
 
+<<<<<<< HEAD
 app.use(cors());
 
+=======
+// Sử dụng CORS để cho phép frontend gọi tới
+app.use(cors());
+
+// Middleware để ghi log mọi request đến Gateway
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 app.use((req, res, next) => {
     console.log(`[Gateway] Received request: ${req.method} ${req.originalUrl}`);
     next();
 });
 
+<<<<<<< HEAD
 const services = [
     {
         route: '/api/users',
@@ -53,6 +61,37 @@ services.forEach(({ route, target }) => {
             // Ví dụ: Client gọi /api/branches/nearest -> Service nhận /nearest
             [`^${route}`]: '',
         },
+=======
+// Định nghĩa các route và service tương ứng
+const services = [
+    {
+        route: '/api/users',
+        target: 'http://localhost:3001',
+    },
+    {
+        route: '/api/products',
+        target: 'http://localhost:3002',
+    },
+    {
+        route: '/api/orders',
+        target: 'http://localhost:3003',
+    },
+    {
+        route: '/api/payments',
+        target: 'http://localhost:3004',
+    },
+];
+
+// Thiết lập proxy cho từng service
+services.forEach(({ route, target }) => {
+    const proxyOptions = {
+        target,
+        changeOrigin: true, // Cần thiết để proxy hoạt động đúng
+        pathRewrite: {
+            [`^${route}`]: '/',
+        },
+        
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
     };
     app.use(route, createProxyMiddleware(proxyOptions));
 });

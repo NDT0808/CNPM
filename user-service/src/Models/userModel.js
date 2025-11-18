@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -58,4 +59,51 @@ userSchema.pre('save', async function (next) {
 });
 
 const User = mongoose.model('User', userSchema);
+=======
+﻿// user-service/src/models/userModel.js
+
+// Thay thế require bằng import
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+
+const userSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            lowercase: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        isAdmin: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
+const User = mongoose.model('User', userSchema);
+
+// Thay thế module.exports bằng export default
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 export default User;

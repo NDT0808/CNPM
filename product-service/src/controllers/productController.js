@@ -1,7 +1,12 @@
 ﻿import Product from '../models/productModel.js';
+<<<<<<< HEAD
 import Inventory from '../models/inventoryModel.js'; // Nhớ tạo file này ở bước trước
 
 // @desc    Tạo một sản phẩm mới (Master Data)
+=======
+
+// @desc    Tạo một sản phẩm mới
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 // @route   POST /
 export const createProduct = async (req, res) => {
     try {
@@ -20,6 +25,7 @@ export const createProduct = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
 // @desc    Lấy tất cả sản phẩm (Hỗ trợ lọc theo Branch)
 // @route   GET /?branchId=...&keyword=...
 export const getAllProducts = async (req, res) => {
@@ -74,11 +80,20 @@ export const getAllProducts = async (req, res) => {
 
         res.json(result);
 
+=======
+// @desc    Lấy tất cả sản phẩm
+// @route   GET /
+export const getAllProducts = async (req, res) => {
+    try {
+        const products = await Product.find({});
+        res.json(products);
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
     } catch (error) {
         res.status(500).json({ message: 'Lỗi server', error: error.message });
     }
 };
 
+<<<<<<< HEAD
 // @desc    Lấy một sản phẩm theo ID (Kèm tồn kho chi nhánh nếu có)
 // @route   GET /:id?branchId=...
 export const getProductById = async (req, res) => {
@@ -100,6 +115,15 @@ export const getProductById = async (req, res) => {
             }
 
             res.json(productData);
+=======
+// @desc    Lấy một sản phẩm theo ID
+// @route   GET /:id
+export const getProductById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (product) {
+            res.json(product);
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
         } else {
             res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
         }
@@ -111,6 +135,7 @@ export const getProductById = async (req, res) => {
 // @desc    Cập nhật một sản phẩm
 // @route   PUT /:id
 export const updateProduct = async (req, res) => {
+<<<<<<< HEAD
     try {
         const { name, description, price, imageUrl, category } = req.body;
         const product = await Product.findById(req.params.id);
@@ -133,10 +158,29 @@ export const updateProduct = async (req, res) => {
 };
 
 // @desc    Xóa một sản phẩm (Và xóa luôn trong kho các chi nhánh)
+=======
+    const { name, description, price, imageUrl, category } = req.body;
+    const product = await Product.findById(req.params.id);
+    if (product) {
+        product.name = name || product.name;
+        product.description = description || product.description;
+        product.price = price || product.price;
+        product.imageUrl = imageUrl || product.imageUrl;
+        product.category = category || product.category;
+        const updatedProduct = await product.save();
+        res.json(updatedProduct);
+    } else {
+        res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+    }
+};
+
+// @desc    Xóa một sản phẩm
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 // @route   DELETE /:id
 export const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
+<<<<<<< HEAD
 
         if (product) {
             // 1. Xóa sản phẩm gốc
@@ -146,10 +190,16 @@ export const deleteProduct = async (req, res) => {
             await Inventory.deleteMany({ product: req.params.id });
 
             res.json({ message: 'Sản phẩm và dữ liệu kho liên quan đã được xóa' });
+=======
+        if (product) {
+            await product.deleteOne(); // Dùng deleteOne() thay cho remove() đã cũ
+            res.json({ message: 'Sản phẩm đã được xóa' });
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
         } else {
             res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
         }
     } catch (error) {
+<<<<<<< HEAD
         res.status(500).json({ message: 'Lỗi server khi xóa sản phẩm', error: error.message });
     }
 };
@@ -179,5 +229,8 @@ export const seedInventory = async (req, res) => {
         res.json({ message: `Đã nhập kho thành công ${products.length} món cho chi nhánh ${branchId}` });
     } catch (error) {
         res.status(500).json({ message: error.message });
+=======
+        res.status(500).json({ message: 'Lỗi server khi xóa sản phẩm' });
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
     }
 };

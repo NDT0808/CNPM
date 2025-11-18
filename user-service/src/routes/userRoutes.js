@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿import express from 'express';
 import {
     registerUser,
@@ -27,4 +28,18 @@ router.route('/')
 router.route('/:id')
     .delete(protect, admin, deleteUser);
 
+=======
+﻿// user-service/src/routes/userRoutes.js
+
+// Thay thế require bằng import
+import express from 'express';
+import { registerUser, loginUser } from '../controllers/userController.js';
+
+const router = express.Router();
+
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+
+// Thay thế module.exports bằng export default
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 export default router;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿import mongoose from 'mongoose';
 
 const orderSchema = mongoose.Schema(
@@ -28,11 +29,26 @@ const orderSchema = mongoose.Schema(
                     { name: String, price: Number }
                 ],
                 note: String
+=======
+﻿// order-service/src/models/orderModel.js
+import mongoose from 'mongoose';
+
+const orderSchema = new mongoose.Schema(
+    {
+        userId: { type: String, required: true },
+        orderItems: [
+            {
+                productId: { type: String, required: true },
+                name: { type: String, required: true },
+                quantity: { type: Number, required: true },
+                price: { type: Number, required: true },
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
             },
         ],
         shippingAddress: {
             address: { type: String, required: true },
             city: { type: String, required: true },
+<<<<<<< HEAD
             phone: { type: String }, // Thêm sđt
             // Các trường này backend yêu cầu nhưng frontend có thể tự map
             postalCode: { type: String, default: '70000' },
@@ -61,6 +77,28 @@ const orderSchema = mongoose.Schema(
 
         // --- GIỐNG ẢNH ---
         droneId: { type: String, default: null }
+=======
+        },
+        totalPrice: {
+            type: Number,
+            required: true,
+            default: 0.0,
+        },
+        status: {
+            type: String,
+            required: true,
+            enum: ['Pending', 'Processing', 'Delivered', 'Cancelled'],
+            default: 'Pending',
+        },
+        isPaid: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        paidAt: {
+            type: Date,
+        },
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
     },
     {
         timestamps: true,
@@ -68,5 +106,8 @@ const orderSchema = mongoose.Schema(
 );
 
 const Order = mongoose.model('Order', orderSchema);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 export default Order;

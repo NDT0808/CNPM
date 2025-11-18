@@ -19,7 +19,12 @@ const OrderHistoryPage = () => {
             try {
                 setLoading(true);
                 const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
+<<<<<<< HEAD
                 const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders/myorders/${userInfo._id}`, config);                setOrders(data);
+=======
+                const { data } = await axios.get(`http://localhost:3000/api/orders/myorders/${userInfo._id}`, config);
+                setOrders(data);
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
             } catch (err) {
                 setError('Không thể tải lịch sử đơn hàng.');
             } finally {

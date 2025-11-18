@@ -1,6 +1,7 @@
 {
   "ExpandedNodes": [
     "",
+<<<<<<< HEAD
     "\\delivery-service",
     "\\foodfast-frontend",
     "\\foodfast-frontend\\src",
@@ -12,5 +13,14 @@
     "\\order-service\\src\\routes"
   ],
   "SelectedNode": "\\order-service\\src\\models\\orderModel.js",
+=======
+    "\\foodfast-frontend",
+    "\\foodfast-frontend\\src",
+    "\\foodfast-frontend\\src\\components",
+    "\\foodfast-frontend\\src\\pages",
+    "\\foodfast-frontend\\src\\pages\\admin"
+  ],
+  "SelectedNode": "\\foodfast-frontend\\src\\pages\\admin\\OrderListAdminPage.jsx",
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
   "PreviewInSolutionExplorer": false
 }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿# Logs
+=======
+# Logs
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
 logs
 *.log
 npm-debug.log*
@@ -22,4 +26,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 .env
+=======
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8

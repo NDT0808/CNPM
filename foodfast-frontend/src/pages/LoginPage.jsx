@@ -27,7 +27,14 @@ const LoginPage = () => {
         e.preventDefault();
         setError(null);
         try {
+<<<<<<< HEAD
             const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/login`, { email, password });
+=======
+            const { data } = await axios.post('http://localhost:3000/api/users/login', {
+                email,
+                password,
+            });
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
             login(data);
             navigate(redirect);
         } catch (err) {

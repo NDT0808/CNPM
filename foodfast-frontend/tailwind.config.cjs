@@ -5,6 +5,7 @@ export default {
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
+<<<<<<< HEAD
         extend: {
             fontFamily:
             {
@@ -13,6 +14,9 @@ export default {
                 // Nếu bạn muốn font script: script: ['Great Vibes', 'cursive'],
             },
                 },
+=======
+        extend: {},
+>>>>>>> 62d0cde0a996486415924094f6084c5fdfeab9e8
     },
     plugins: [],
 }
