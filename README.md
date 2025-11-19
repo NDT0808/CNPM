@@ -198,14 +198,14 @@ Hệ thống xử lý các nghiệp vụ phức tạp bằng cơ chế sự ki�
     *Khởi chạy hạ tầng (Kafka, Zookeeper, PostgreSQL, Grafana...)*
 
     ```bash
-    docker-compose up -d
+    docker-compose up --build
     ```
 
-4.  **Chạy các Microservices (Local):**
-    Mở Terminal cho từng service và chạy:
+4.  **Chạy Frontend:**
+    Mở Terminal cho thư mục foodfast-frontend và chạy:
 
     ```bash
-    ./mvnw spring-boot:run
+    npm run dev
     ```
 
 5.  **Dừng hệ thống:**
